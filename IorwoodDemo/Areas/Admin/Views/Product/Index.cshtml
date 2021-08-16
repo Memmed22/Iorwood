@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container border backgroundWhite">
+    <div class="row">
+        <div class="col-md-6">
+            <h2 class="text-primary">Product List</h2>
+        </div>
+        <div class="col-6 text-right">
+            <a asp-action="upsert" class="btn btn-primary text-white"><i class="fas fa-plus"></i>&nbsp; Product New</a>
+        </div>
+    </div>
+    <br />
+    <table id="DT_Load" class="table-striped table-bordered table">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Unit</th>
+                <th>Price(₾)</th>
+                
+                <th>Control</th>
+            </tr>
+        </thead>
+
+    </table>
+</div>
+
+@section Scripts{
+    <script src="~/js/product.js"></script>
+}

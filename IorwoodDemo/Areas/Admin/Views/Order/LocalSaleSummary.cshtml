@@ -1,0 +1,172 @@
+﻿
+@{
+    ViewData["Title"] = "LocalSaleSummary";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+
+<div id="mainContainer" class="backgroundWhiteBorder">
+
+    <div id="orderSubmittedWall" class="container row collapse">
+
+        <div class="container">
+            <div class="card">
+                <div class="card-header bg-dark text-light ml-0 row container">
+                    <div class="col-8">
+                        <h1 class="text-primary text-center">Order Submitted Successfully !!!</h1>
+                    </div>
+                    <div class="col-4 mt-2 text-right">
+                        <a asp-action="LocalSale" onclick="return backToSale()" class="btn pt-2 btn-outline-info btn-sm">Back to Sale</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                @*<nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <h1 class="text-primary text-center">Order Submitted Successfully !!!</h1>
+                        </li>
+                        <li>
+                            <div class="col-12 text-right">
+                                <a asp-action="LocalSale" onclick="return backToSale()" class="btn pt-2 btn-outline-info btn-sm">Back to Sale</a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>*@
+
+                <div class="mt-3 col-12 text-center">
+                    Your Order Code : <span id="orderID">orderCodePlace</span> <br /> <br />
+                    <img src="~/images/lawn_leaf.jpg" width="65%" />
+
+                </div>
+                <div class="col-12 text-center">
+                    <br />
+                    Order has been accepted successfully...
+                </div>
+            </div>
+
+            <div id="secondContainer" class="container">
+                <div class="card">
+                    <div class="card-header bg-dark text-light ml-0 row container">
+                        <div class="col-6">
+                            <i class="fa fa-shopping-cart"></i> &nbsp;
+                            Order
+                        </div>
+                        <div class="col-6 text-right">
+                            <a asp-action="LocalSale" onclick="return backToSale()" class="btn pt-2 btn-outline-info btn-sm">Back to Sale</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="container rounded p-2">
+                            <div class="row">
+
+                                <div class="col-12 col-lg-6 pb-4">
+                                    <div class="row">
+                                        <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="text-info">Submit Your Order</span>
+                                        </h4>
+                                    </div>
+                                    <div class="row my-1">
+                                        <div class="col-3">
+                                            <label>Full Name</label>
+                                        </div>
+                                        <div class="col-9">
+                                            <input id="txtName" type="text" class="form-control" />
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row my-1">
+                                        <div class="col-3">
+                                            <label>TEL No</label>
+                                        </div>
+                                        <div class="col-9">
+                                            <input id="txtPhoneNumber" pattern="[0-9]{3}-[0-9]{2}-[0-9]{2}-[0-9]{2}" name="phone" type="tel" placeholder="XXX-XX-XX-XX" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row my-1">
+                                        <div class="col-3">
+                                            <label>Adress</label>
+                                        </div>
+                                        <div class="col-9">
+                                            <input id="txtAddress" type="text" class="form-control" />
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row my-1">
+                                        <div class="col-3">
+                                            <label>Comment</label>
+                                        </div>
+                                        <div class="col-9">
+                                            <textarea id="txtComment" style="height:100px" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-lg-5 offset-lg-1">
+                                    <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                        <span class="text-info">Order Summary:</span>
+                                    </h4>
+                                    <ul id="orderListContainer" class="list-group mb-3">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-12 col-md-4 offset-md-8">
+
+                                <button type="submit" id="btnPlaceOrder" onclick="return placeOrder()" class="btn disabled btn-success form-control">Place Order</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        @section Scripts{
+            <script src="~/js/localSaleSummary.js">
+
+
+                                    //$(function () {
+                                    //    $("#datepicker").datepicker();
+                                    //    $("#timepicker").timepicker({
+                                    //        timeFormat: 'h:mm p',
+                                    //        interval: 60,
+                                    //        minTime: '10',
+                                    //        maxTime: '6:00pm',
+                                    //        defaultTime: '11',
+                                    //        startTime: '10:00',
+                                    //        dynamic: false,
+                                    //        dropdown: true,
+                                    //        scrollbar: true
+                                    //    });
+            </script>
+
+        }
+
+
+        <div class="collapse" id="orderListTemp">
+            <div>
+                <h6 class="my-0">ProductNamePlace</h6>
+                <small class="text-muted">Quantity: QuantityPlace </small>
+            </div>
+            <span class="text-muted">₾ PricePlace</span>
+        </div>
+
+
+        <div class="collapse" id="totalAmountTemp">
+            <small class="text-info">Total (GEL)</small>
+            <strong id="totalAmountId" class="text-info">₾ TotalAmountPlace</strong>
+        </div>
+
+
+
+

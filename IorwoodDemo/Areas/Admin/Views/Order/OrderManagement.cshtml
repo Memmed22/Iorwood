@@ -1,0 +1,218 @@
+﻿@using IorwoodDemo.Utility
+@model List<OrderDetailsViewModel>
+@{
+    ViewData["Title"] = "OrderManagement";
+    var payDisplay = "none";
+    var paiedDisplay = "none";
+    var dilaveryDisplay = "none";
+    var senDisplay = "none";
+    var dvId = "";
+    var btnPay = "";
+    var btnPayed = "";
+    var button1 = "";
+    var button2 = "";
+}
+
+<h1 class="text-primary py-3">Order Management</h1>
+
+@if (Model.Count > 0)
+{
+    <form >
+
+        <div class="container row bg-white p-2 border mb-3 rounded">
+            @foreach (var item in Model)
+            {
+
+                dvId = "dv" + item.OrderHeader.Id;
+                btnPayed = "btnPayed" + item.OrderHeader.Id;
+                btnPay = "btnPay" + item.OrderHeader.Id;
+                button1 = "1btn" + item.OrderHeader.Id;
+                button2 = "2btn" + item.OrderHeader.Id;
+                <div id ="@dvId" class="col-12 pb-3 pt-3 mt-4 border  rounded">
+                    <div class="backgroundWhiteBorder10Padding">
+                        <div class="row">
+                            <div class="col-4">
+                                Order No : @item.OrderHeader.Id -&nbsp;<span style="font-size:16px" class="badge text-danger font-weight-lighter badge-secondary badge-pill">  @item.OrderHeader.TotalAmount ₾</span>
+                                <ul class="mt-1 text-info">
+                                    @foreach (var detailItem in item.OrderDetailList)
+                                    {
+                                        <li>@detailItem.ProductName x @detailItem.Count</li>
+                                    }
+                                </ul>
+                            </div>
+                            <div class="col-4 pb-2">
+
+                                <div class=" input-group pb-2">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">Time</span>
+                                    </div>
+                                    <input type="text" class="border rounded form-control" readonly value="@(item.OrderHeader.PickUpDateTime.ToShortDateString() + " * " + item.OrderHeader.PickUpDateTime.ToShortTimeString())" />
+                                </div>
+                                <div class=" input-group pb-2">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">Name</span>
+                                    </div>
+                                    <input type="text" class="border rounded form-control" readonly value="@item.OrderHeader.FullName (@item.OrderHeader.PhoneNumber)" />
+
+                                </div>
+                                <div class=" input-group pb-2">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">Adress</span>
+                                    </div>
+                                    <input type="text" class="border rounded form-control" readonly value="@item.OrderHeader.Adress" />
+
+                                </div>
+
+                                @{var manualComment = item.OrderHeader.Comment;
+                                    if (manualComment == null || manualComment.Trim() == "")
+                                    {
+                                        item.OrderHeader.Comment = "No Comment!";
+                                    }
+                                }
+                                <textarea readonly class="rounded border form-control" style="width:100%;height:55px;">@item.OrderHeader.Comment</textarea>
+
+                            </div>
+
+                            <div  class="col-3 offset-1 d-flex align-content-center">
+                                <div class="col-12">
+
+
+                                    @if (item.OrderHeader.Status == StaticValue.OrderSubmitted)
+                                    {
+                                        senDisplay = "normal";
+                                    }
+                                    <button id="@button1" style="display:@senDisplay" onclick="return OrderAction(@item.OrderHeader.Id, 'send')" class="btn btn-primary form-control mb-3">
+                                        <i class="fas fa-check"></i> &nbsp; Prepare And Send
+                                    </button>
+
+                                    @if (item.OrderHeader.Status == StaticValue.OrderOnTheWay)
+                                    {
+                                        dilaveryDisplay = "normal";
+                                    }
+                                    <button id="@button2" onclick="return OrderAction(@item.OrderHeader.Id, 'deliver')" style="display:@dilaveryDisplay" class="btn btn-success form-control mb-3">
+                                        <i class="fas fa-flag-checkered"></i> &nbsp; Order Delivered
+                                    </button>
+
+
+                                    <button onclick="return CancelOrder(@item.OrderHeader.Id)" class="btn btn-warning form-control mb-3">
+                                        <i class="fas fa-times"></i> &nbsp; Cancel Order
+                                    </button>
+                                    @if (item.OrderHeader.PaymentStatus == StaticValue.PaymentIsWaiting)
+                                    {
+                                        payDisplay = "normal";
+                                    }
+                                    @if (item.OrderHeader.PaymentStatus == StaticValue.PaymentDone)
+                                    {
+                                        paiedDisplay = "normal";
+                                    }
+
+                                    <button id="@btnPay" style="display:@payDisplay" onclick="return Payment(@item.OrderHeader.Id)" class="btn btn-success form-control mb-3">
+                                        <i class="fas fa-file-invoice"></i>&nbsp; Pay
+                                    </button>
+                                    <button id="@btnPayed" style="display:@paiedDisplay; cursor:default" disabled class="btn btn-success form-control mb-3">
+                                        <i class="fas fa-file-invoice"></i>&nbsp; Paid
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+            }
+        </div>
+
+    </form>
+}
+
+else
+{
+    <div>There is no more pending orders ! </div>
+}
+
+
+@section Scripts{ 
+    <script>
+        function OrderAction(id, action) {
+           
+            if (action == 'send') {
+                $.ajax({
+                    url: "/admin/order/PrepareAndSendOrder/" + id,
+                    type: "post",
+                    datatype: "json",
+                    success: function (data) {
+                        if (data.success) {
+                          
+                            $("#1btn" + id).hide();
+                            $("#2btn" + id).show();
+                        }
+                    }
+                })
+            }
+            else {
+              
+                if($("#btnPayed" + id).is(":hidden")){
+                    swal({
+                        title: "Payment",
+                        text: "Before the payment you can't finish Order transaction",
+                        icon: "warning",
+                        dangerMode: true
+                    });
+
+                    return false;
+                }
+
+                
+
+                 $.ajax({
+                    url: "/admin/order/DeliveredOrder/" + id,
+                    type: "post",
+                    datatype: "json",
+                    success: function (data) {
+                        if (data.success) {
+
+                            $("#dv" + id).hide("slow");
+                        }
+                    }
+                })
+            }
+
+            return false;
+        }
+
+        function CancelOrder(id) {
+            
+            $.ajax({
+                url: "/admin/order/CancelOrder/" + id,
+                type : "post",
+                datatype : "json",
+                success: function (data) {
+                    if (data.success) {
+                        $("#dv" + id).hide("slow");
+                    }
+                }
+            })
+
+            return false;
+        }
+
+
+        function Payment(id) {
+            $.ajax({
+                url: "/admin/order/PayOrder/" + id,
+                type: "post",
+                datatype: "json",
+                success: function (data) {
+                    if (data.success) {
+                        $("#btnPay" + id).hide();
+                        $("#btnPayed" + id).show();
+                    }
+                }
+            })
+
+            return false;
+        }
+    </script>
+}

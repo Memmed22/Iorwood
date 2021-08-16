@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container border backgroundWhite">
+    <div class="row">
+        <div class="col-md-6">
+            <h2 class="text-primary">Unit List</h2>
+        </div>
+        <div class="col-6 text-right">
+            <a asp-action="upsert" class="btn btn-primary text-white"><i class="fas fa-plus"></i>&nbsp; Unit New</a>
+        </div>
+    </div>
+    <br />
+    <table id="DT_Load" class="table-striped table-bordered table">
+        <thead>
+            <tr>
+                <th>Unit Name</th>
+                <th>Unit Number</th>
+                <th></th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+@section Scripts{
+    <script src="~/js/unit.js"></script>
+}

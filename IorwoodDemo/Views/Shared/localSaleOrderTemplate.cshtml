@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewData["Title"] = "localSaleOrderTemplate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" id="orderTemplate">
+    <div class="d-none d-lg-block col-lg-2 text-center py-2">
+        <img src="~/images/lawn_leaf.jpg" class="rounded" width="120" height="80" />
+    </div>
+    <div class="col-12 text-sm-center col-lg-5 text-lg-left">
+        <h4><strong>ProductName</strong></h4>
+    </div>
+    <div class="col-12 text-sm-center col-lg-5 text-lg-right row">
+        <div class="col-4 text-md-right" style="padding-top:5px;">
+            <h6><strong><span>₾ 23</span> <span class="text-muted">x</span><span> 12</span> </strong></h6>
+        </div>
+        <div class="col-6 col-sm-4 col-lg-6">
+            <div class="float-right mx-1">
+                @*<button type="submit" class="btn btn-primary" asp-page-handler="plus" asp-route-cartId="@item.ProductId">
+                        <i class="fas fa-plus"></i>
+                    </button>*@
+
+                <button id="btnPlus" class="btn btn-primary">
+                    <i class="fas fa-plus"></i>
+                </button>
+
+            </div>
+            <div class="float-right mx-1">
+                @*<button type="submit" class="btn btn-danger" asp-page-handler="minus" asp-route-cartId="@item.ProductId">
+                        <i class="fas fa-minus"></i>
+                    </button>*@
+                <button class="btn btn-danger">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="col-2 col-sm-4 col-lg-2 text-right">
+            @*<button type="submit" class="btn btn-outline-danger" asp-page-handler="remove" asp-route-cartId="@item.ProductId">
+                    <i class="fas fa-trash"></i>
+                </button>*@
+            <button class="btn btn-outline-danger">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/localSale.js"></script>
+}
+
+
+

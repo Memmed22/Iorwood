@@ -1,0 +1,71 @@
+﻿@model IorwoodDemo.Model.ViewModel.HomePageViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@foreach (var item in Model.CategroyList)
+{
+    if (Model.ProductList.FirstOrDefault(u => u.CategoryId == item.Id) != null)
+    {
+<div class="container row pb-3 backgroundWhite">
+    <div class="col-12">
+        <div class="row">
+            <h2 class="text-success pl-1"><b>@item.Name</b></h2>
+            <div class="col-12">
+                <div class="row my-3">
+                    @{ int index = 0; }
+                    @foreach (var product in Model.ProductList.Where(u => u.CategoryId == item.Id))
+                    {
+                        index++;
+                        if (index > 8)
+                            break;
+
+                        <div class="col-lg-3 col-xl-3 col-md-6 pb-4">
+                            <div class="card" style="border:2px solid #008cba; border-radius:5px;">
+                                <div class="pl-3 pt-1 text-center">
+                                    <h5 class="card-title text-primary"><b>@product.Name</b></h5>
+                                </div>
+                                <div class="d-flex justify-content-between form-control" style="border:0px">
+
+                                    <div class="cold-6 badge badge-warning text-center" style="height:18px; font-size:12px">
+                                        @if (product.Extra != null)
+                                        {
+                                            @product.Extra.Name
+                                        }
+                                        else
+                                        {
+                                            <p>Standart</p>
+                                        }
+                                    </div>
+
+
+                                    <div class="col-6 text-right h4" style="color:maroon;">
+                                        <b>@product.Price</b><i style="color:darkblue; font-size:11px">₾-@(product.Unit.NumberWithName)</i>
+                                    </div>
+                                </div>
+                                <img src="@product.Image" style="height:200px" class="card-img-top p-2 rounded" />
+
+                                <a asp-action="Details" class="btn btn-primary" style="border-radius:2px" asp-route-id="@product.Id">Details</a>
+
+
+                            </div>
+
+                        </div>
+
+                    }
+                
+
+                </div>
+    @if (index > 8)
+    {
+    <div class="row border border-primary">
+        <button type="button" class="btn btn-secondary btn-sm btn-block">Show More</button>
+    </div>
+    }
+
+            </div>
+        </div>
+    </div>
+</div>
+    }
+}

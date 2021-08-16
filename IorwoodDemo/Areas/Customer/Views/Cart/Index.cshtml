@@ -1,0 +1,197 @@
+﻿@using IorwoodDemo.Model.ViewModel
+@model List<ProductDetailsViewModel>
+@{
+    ViewData["Title"] = "Index";
+    var totalAmount = 0;
+}
+
+<form method="post" asp-action="Summary">
+
+    <br />
+    @if (Model.Count > 0)
+    {
+
+        <div class="backgroundWhiteBorder">
+            <div class="container">
+                <div class="card">
+                    <div class="card-header bg-dark text-light ml-0 row container">
+                        <div class="col-6">
+                            <i class="fa fa-shopping-cart"></i> &nbsp;
+                            Cart List
+                        </div>
+                        <div class="col-6 text-right">
+                            <a asp-action="Index" asp-controller="Home" asp-area="Customer" style="height:auto" class="btn pt-2 btn-outline-info btn-sm">Back to Shop</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+                        @foreach (var item in Model)
+                        {
+
+                            totalAmount += (item.Count * Convert.ToInt32(item.Price));
+                            string spnCountId = "spnCount" + item.ProductId;
+                            string spnPriceId = "spnPrice" + item.ProductId;
+                            string dvId = "dv" + item.ProductId;
+                            string hrId = "hr" + item.ProductId;
+                            <div class="row" id="@dvId">
+                                <div class="d-none d-lg-block col-lg-2 text-center py-2">
+                                    <img src="@item.Image" class="rounded" width="120" height="80" />
+                                </div>
+                                <div class="col-12 text-sm-center col-lg-5 text-lg-left">
+                                    <h4><strong>@item.ProductName</strong></h4>
+                                </div>
+                                <div class="col-12 text-sm-center col-lg-5 text-lg-right row">
+                                    <div class="col-4 text-md-right" style="padding-top:5px;">
+                                        <h6><strong><span id="@spnPriceId">₾ @item.Price</span> <span class="text-muted">x</span><span id="@spnCountId"> @item.Count</span> </strong></h6>
+                                    </div>
+                                    <div class="col-6 col-sm-4 col-lg-6">
+                                        <div class="float-right mx-1">
+                                            @*<button type="submit" class="btn btn-primary" asp-page-handler="plus" asp-route-cartId="@item.ProductId">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>*@
+
+                                            <button onclick="return countControl(@item.ProductId, 'Add')" id="btnPlus" class="btn btn-primary">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+
+                                        </div>
+                                        <div class="float-right mx-1">
+                                            @*<button type="submit" class="btn btn-danger" asp-page-handler="minus" asp-route-cartId="@item.ProductId">
+                                                    <i class="fas fa-minus"></i>
+                                                </button>*@
+                                            <button onclick="return countControl(@item.ProductId, 'Remove')" class="btn btn-danger">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-2 col-sm-4 col-lg-2 text-right">
+                                        @*<button type="submit" class="btn btn-outline-danger" asp-page-handler="remove" asp-route-cartId="@item.ProductId">
+                                                <i class="fas fa-trash"></i>
+                                            </button>*@
+                                        <button class="btn btn-outline-danger" onclick="return deleteFromCart(@item.ProductId)">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr id="@hrId"/>
+                        }
+
+                        <div class="row">
+                            <div class="col-12 col-md-5">
+
+                            </div>
+                            <div class="col-12 col-md-6 offset-md-1 col-lg-4 offset-lg-3 pr-4">
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between bg-light">
+                                        <span class="text-info"> Amount (GEL)</span>
+                                        <strong class="text-info"> <span id="spnOrderTotal">₾ @totalAmount.ToString("0.00")</span></strong>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="card-footer">
+                        <div class="col-12 col-lg-4 offset-lg-8 col-md-6 offset-md-6">
+                            <button  type="submit"  class="btn btn-success form-control">Summary</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    else
+
+    {
+
+        <div>Please add some items to Cart!</div>
+    }
+</form>
+
+<script>
+
+    function countControl(Productid, action) {
+        var elSpn = document.getElementById('spnCount' + Productid).innerHTML;
+        var elSpnPrice = document.getElementById('spnPrice' + Productid).innerHTML;
+        var totalAmount = document.getElementById('spnOrderTotal').innerHTML;
+
+
+        if (action == 'Add') {
+
+            $.ajax({
+                url: "/customer/cart/increament/" + Productid,
+                type: "post",
+                datatype: "json",
+                success: function (data) {
+                    if (data.success) {
+                        document.getElementById('spnCount' + Productid).textContent = parseInt(elSpn) + 1;
+                        totalAmount = parseInt(totalAmount) + parseInt(elSpnPrice);
+                        document.getElementById('spnOrderTotal').textContent = parseFloat(totalAmount).toFixed(2);
+                    }
+                    else {
+                        toastr.warning(data.message);
+                    }
+                }
+            });
+        }
+        else {
+            if (parseInt(elSpn) == 1) {
+                deleteFromCart(Productid)
+            }
+            else {
+                $.ajax({
+                    url: "/customer/cart/decreament/" + Productid,
+                    type: "post",
+                    datatype: "json",
+                    success: function (data) {
+                        if (data.success == false && data.message == "EmptySession")
+                            deleteFromCart(Productid);
+                        if (data.success) {
+                            document.getElementById('spnCount' + Productid).textContent = parseInt(elSpn) - 1;
+                            totalAmount = parseInt(totalAmount) - parseInt(elSpnPrice);
+                            document.getElementById('spnOrderTotal').textContent = parseFloat(totalAmount).toFixed(2);
+                        }
+                    }
+                })
+
+            }
+
+        }
+        return false;
+    }
+
+    function deleteFromCart(productId) {
+        var elSpnPrice = document.getElementById('spnPrice' + productId).innerHTML;
+        var elSpnCount = document.getElementById('spnCount' + productId).innerHTML;
+        var totalAmount = document.getElementById('spnOrderTotal').innerHTML;
+     
+        $.ajax({
+            url: "/customer/cart/delete/" + productId,
+            type: "delete",
+            datatype: "json",
+            success: function (data) {
+                if (data.success) {
+                    $("#dv" + productId).hide("slow");
+                    $("#hr" + productId).hide();
+                    var CartCount = document.getElementById('spnCartCount').innerHTML;
+
+                    document.getElementById("spnCartCount").textContent = parseInt(CartCount) - 1;
+
+                    totalAmount = parseInt(totalAmount) - (parseInt(elSpnPrice)*parseInt(elSpnCount));
+                    document.getElementById('spnOrderTotal').textContent = parseFloat(totalAmount).toFixed(2);
+                }
+                else {
+                    toastr.warning(data.message);
+                }
+            }
+        })
+
+        return false;
+    }
+
+
+
+</script>

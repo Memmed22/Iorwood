@@ -1,0 +1,90 @@
+﻿@model IorwoodDemo.Model.ViewModel.CurrentMovementViewModel
+@{
+    ViewData["Title"] = "ClearingCashDesk";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<form method="post" asp-action="ClearCashDesk">
+
+    <div class="container border backgroundWhite">
+        <div class="row">
+            <div class="col-md-6">
+                <h2 class="text-primary">Clearing Cash Desk </h2>
+            </div>
+            @*<div class="col-6 text-right">
+                    <a asp-action="upsert" class="btn btn-primary text-white"><i class="fas fa-plus"></i>&nbsp; Category New</a>
+                </div>*@
+        </div>
+        <hr />
+        <br />
+        <div class="row">
+            <div class="col-md-8 col-sm-8 col-lg-8">
+                <table id="DT_Load" class="table-striped table-bordered table">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Way</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th>Sum(₾)</th>
+                            
+                        </tr>
+                    </thead>
+
+                </table>
+            </div>
+            <div class="col-md-4 col-sm-4 col-lg-4">
+                <div class="row d-flex justify-content-center">
+                    <h4 class="text-center text-primary">Accounting Summary</h4>
+
+                </div>
+                <br />
+                <div id="orderListContainer" class="row ml-3 d-flex justify-content-center">
+
+                    <input id="hiddenTotalAmount" type="hidden" />
+                    <div class="card-body">
+                        <div class="row">
+
+
+                            <div class=" input-group pb-2">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">Inflow Sum : </span>
+                                </div>
+                                <input type="text" id="inputInflow" class="border rounded form-control" asp-for="totalInflow" readonly value="@Model.totalInflow  ₾" />
+                            </div>
+
+                            <div class=" input-group pb-2">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">Outflow Sum : </span>
+                                </div>
+                                <input type="text" id="inputOutflow" class="border rounded form-control" asp-for="totalOutflow" readonly value="@Model.totalOutflow  ₾" />
+                            </div>
+                            <div class=" input-group mt-4 pb-2">
+                                Cash Amount : &nbsp;<span style="font-size:16px" id="spnCashLeave" class="badge text-danger font-weight-lighter badge-secondary badge-pill">  23</span>
+                                                   
+                            </div>
+                            <div class=" input-group mt-2 pb-2">
+                                Leave in : <input class="ml-2 " id="inputLeaveIn" type="number" asp-for="cashLeft" value="@Model.cashLeft" />
+                                <span class="text-danger" asp-validation-for="cashLeft"></span>
+                            </div>
+                            <div class="input-group mt-3">
+                              <input class="form-control" id="inputLeaveIn" placeholder="Comment ... " asp-for="Description" value="@Model.Description" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dv-Summarize ml-3">
+                    <hr />
+                    <button  type="submit" class="btn btn-success form-control">Clear Desk</button>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+</form>
+@section Scripts{
+    <script src="~/js/ClearingCashDesk.js"></script>
+}
+

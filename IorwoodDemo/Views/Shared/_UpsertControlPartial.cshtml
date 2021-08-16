@@ -1,0 +1,22 @@
+﻿@model int
+<div class="col-md-8 pt-3">
+    <div class="form-group row">
+        <div class="col-9 offset-3">
+            <div class="row">
+                <div class="col-6">
+                    @if (Model != 0)
+                    {
+                        <button type="submit" class="btn btn-primary form-control">Update</button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-primary form-control">Create New</button>
+                    }
+                </div>
+                <div class="col-6">
+                    <a asp-action="Index" class="btn btn-success form-control">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

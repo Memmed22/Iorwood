@@ -1,0 +1,162 @@
+﻿@model IorwoodDemo.Model.ViewModel.ProductUpsertViewModel
+@{
+    ViewData["Title"] = "Upsert";
+}
+
+@using (Html.BeginForm("Upsert", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="container">
+        <div class="backgroundWhite border row mx-2 px-2">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+            <div class="col-md-12 px-3" style="border-bottom:solid 1px #325d88">
+                <h2 class="text-primary">Create Product</h2>
+                <input type="hidden" asp-for="Product.Id" />
+            </div>
+
+
+            <div class="col-md-8 pt-3">
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label asp-for="Product.Name"></label>
+                    </div>
+                    <div class="col-md-9 test1">
+                        <input asp-for="Product.Name" id="inputName" class="form-control" />
+
+                        @Html.ValidationMessageFor(model => model.Product.Name, "", new { @class = "text-danger", @id = "nameSpan" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label asp-for="Product.Price"></label>
+                    </div>
+                    <div class="col-md-9 test1">
+                        <input asp-for="Product.Price" id="inputPrice" class="form-control" />
+                        <span class="text-danger" asp-validation-for="Product.Price"></span>
+                    </div>
+                </div>
+
+
+
+
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label asp-for="Product.ShortDescription"></label>
+                    </div>
+                    <div class="col-md-9 test1">
+                        <textarea id="txtDesc" asp-for="Product.ShortDescription" class="form-control"></textarea>
+
+                    </div>
+                </div>
+
+
+                <div class=" disabled form-group row">
+                    <div class="col-md-3">
+                        <label asp-for="Product.Image"></label>
+                    </div>
+                    <div class="col-md-9 test1">
+                        <input disabled type="file"  name="files" id="inputImage" class="form-control" />
+
+                        <input  type="hidden" asp-for="Product.Image" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label asp-for="Product.CategoryId"></label>
+                    </div>
+                    <div class="col-md-9 test1">
+                        @Html.DropDownListFor(u => u.Product.CategoryId, Model.CategoryList, " - Select a Category Please - ", new { @class = "form-control", @id = "categoryList" })
+                        <span class="text-danger" asp-validation-for="Product.CategoryId"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label asp-for="Product.UnitId"></label>
+                    </div>
+                    <div class="col-md-9 test1">
+                        @Html.DropDownListFor(u => u.Product.UnitId, Model.UnitList, " - Select a Unit Please - ", new { @class = "form-control", @id = "unitList" })
+                        <span class="text-danger" asp-validation-for="Product.UnitId"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label asp-for="Product.ExtraId"></label>
+                    </div>
+                    <div class="col-md-9 test1">
+                        @Html.DropDownListFor(u => u.Product.ExtraId, Model.ExtraList, " - Select an Extra Please - ", new { @class = "form-control", @id = "extraList" })
+
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="offset-3 pt-0 col-md-9 ">
+                        <div class="row">
+                            <div class="col-md-6">
+                                @if (Model.Product.Id == 0)
+                                {
+                                    <button type="submit" id="btnSubmitt" onclick="return validation('create')" class="btn btn-primary form-control">Create</button>
+                                }
+                                else
+                                {
+                                    <button type="submit" onclick="return validation('update')" class="btn btn-primary form-control">Update</button>
+                                }
+                            </div>
+                            <div class="col-md-6">
+                                <a href="Index" class="btn form-control btn-success">Back to List</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            @if (Model.Product.Id != 0)
+            {
+                <div class="col-md-4 pt-3">
+                    <img style="border:solid 2px #325d88; border-radius:5px;  width:100% " src="@Model.Product.Image" />
+
+                </div>
+            }
+        </div>
+    </div>
+}
+
+@*<form asp-action="Upsert" id="myForm" method="post" enctype="multipart/form-data">
+</form>*@
+
+@section Scripts{
+
+    <script>
+
+        //tinymce.init({
+        //    selector: 'textarea#txtDesc',
+
+        //plugins : 'lists',
+        //    menubar:'file edit format'
+        //});
+
+
+        function validation(status) {
+
+            //var dat = $("#myForm").serialize();
+            //if (!$("#myForm").valid()) {
+            //    return false;
+            //}
+
+            //if (status == "create") {
+            //    var valImage = document.getElementById("inputImage").value;
+            //    if (valImage == null || valImage == "") {
+            //        swal("Error", "Please select an image", "error");
+            //        return false;
+            //    }
+            //}
+        }
+
+    </script>
+}

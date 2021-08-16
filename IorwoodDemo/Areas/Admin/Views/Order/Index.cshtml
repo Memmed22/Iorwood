@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="container border backgroundWhite">
+    <div class="row">
+        <div class="col-6">
+            <h2 class="text-primary">Order's List</h2>
+        </div>
+        <div class="p-2 col-6 d-flex justify-content-end">
+            <ul class="list-group list-group-horizontal-sm">
+                <a asp-action="index" asp-route-status="cancelled" style="text-decoration:none">
+                    <li class="list-group-item itemRejected">Cancelled</li>
+                </a>
+                <a asp-action="index" asp-route-status="complated" style="text-decoration:none">
+                    <li class="list-group-item itemApproved">Complated</li>
+                </a>
+                <a asp-action="index" asp-route-status="inprocess" style="text-decoration:none">
+                    <li class="list-group-item itemPending">In Process</li>
+                </a>
+
+                <a asp-action="index" asp-route-status="all" style="text-decoration:none">
+                    <li class="list-group-item itemAll">All</li>
+                </a>
+
+            </ul>
+        </div>
+    </div>
+    <br />
+    <table id="DT_Load" class="table-striped table-bordered table">
+        <thead>
+            <tr>
+                <th>Order No</th>
+                <th>Full Name</th>
+                <th>Order Date</th>
+                <th>Status</th>
+                <th>Amount</th>
+
+                <th></th>
+            </tr>
+        </thead>
+
+    </table>
+</div>
+@section Scripts{
+    <script src="~/js/order.js"></script>
+    <script>
+        $(function () {
+            var url = window.location.search;
+            
+            if (url.includes("inprocess")) {
+                $(".itemPending").addClass("active text-white");
+
+            }
+
+            else if (url.includes("complated")) {
+                $(".itemApproved").addClass("active text-white");
+            }
+
+            else if (url.includes("cancelled")) {
+                $(".itemRejected").addClass("active text-white");
+            }
+            else { $(".itemAll").addClass("active text-white"); }
+        });
+    </script>
+}
+

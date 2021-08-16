@@ -1,0 +1,155 @@
+﻿
+@{
+    ViewData["Title"] = "LocalSale";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <form method="post" asp-action="localSaleSummary">
+
+        <div class="container border backgroundWhite">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2 class="text-primary">Local Sale </h2>
+                </div>
+                @*<div class="col-6 text-right">
+                    <a asp-action="upsert" class="btn btn-primary text-white"><i class="fas fa-plus"></i>&nbsp; Category New</a>
+                </div>*@
+            </div>
+            <hr />
+            <br />
+            <div class="row">
+                <div class="col-md-6">
+                    <table id="DT_Load" class="table-striped table-bordered table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <div class="row d-flex justify-content-center">
+                        <h4 class="text-center">Order List</h4>
+
+                    </div>
+                    <br />
+                    <div id="orderListContainer" class="row  d-flex justify-content-center">
+
+                        <input id="hiddenTotalAmount" type="hidden" />
+                        <div class="card-body collapse">
+                            <div class="row">
+                                <div class="col-12 col-md-5">
+                                </div>
+                                <div class="col-12 col-md-6 offset-md-1 col-lg-4 offset-lg-3 pr-4">
+                                    <ul class="list-group">
+                                        <li class="list-group-item d-flex justify-content-between bg-light">
+                                            <span class="text-info">Amount ₾</span>
+                                            <strong class="text-info"> <span id="spnOrderTotal">0</span></strong>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="collapse dv-Summarize">
+                        <hr />
+
+                        <button type="submit" onclick="return summary()" class="btn btn-success form-control">Summary</button>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </form>
+<style>
+    .no-close .ui-dialog-titlebar-close {
+        display: none;
+    }
+</style>
+@section Scripts{
+    <script src="~/js/localSale.js"></script>
+}
+
+
+<div class="row collapse" id="orderTemplate">
+    <input type="hidden" id="hiddenProductId" />
+    <div class="d-inline-flex col-lg-2 text-center py-2">
+        <img src="imagePlace" class="rounded" width="70" height="50" />
+    </div>
+    <div class="mt-1 col-12 text-sm-left col-lg-4 text-lg-left">
+        <p><span id="spnProductName">productNamePlace</span></p>
+    </div>
+    <div class=" col-12 text-sm-center col-lg-6 text-lg-right row">
+        <div class="mt-1 col-5 text-md-right" style="padding-top:5px; ">
+            <strong><span class="small"><span id="priceId">pricePlace</span> <span style="font-size:8px">₾</span></span>
+            <span class="text-muted small">x</span><span id="quantityId" class="small"> quantityPlace</span> </strong>
+            <br />
+            <h6>
+                <span id="itemSumId" class="small badge badge-pill badge-secondary">₾ sumPlace</span>
+            </h6>
+           
+        </div>
+        <div class="mt-1 col-7   col-sm-4 col-lg-7">
+            <div class="float-right mx-1">
+            
+                <button id="btnPlus" onclick="return deleteOrderItem()" class="btn btn-danger">
+                    <i class="fas fa-trash"></i>
+                </button>
+
+            </div>
+            <div class="float-right mx-1">
+              
+                <button id="btnEditId" onclick="return editOrderItem(element)" class="btn btn-primary">
+                    <i class="fas fa-edit"></i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+   
+</div>
+
+
+
+<div class="collapse"  id="localSaleOrderPopup">
+    
+    <form id="">
+        <fieldset>
+            <div class="form-group">
+                <label>Quantity : </label>
+                <input type="number" class="form-control" id="inputQuantity">
+
+            </div>
+            @*<div class="form-group">
+                <label>Price : </label>
+                <input type="number" class="form-control" id="inputPrice">
+
+            </div>*@
+
+            <div class="form-group">
+                <label class="control-label">Price</label>
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">₾</span>
+                        </div>
+                        <input type="text" class="form-control" id="inputPrice" aria-label="Amount (to the nearest dollar)">
+                        <div class="input-group-append">
+                            <span class="input-group-text">.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
+</div>
+        

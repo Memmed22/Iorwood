@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container border backgroundWhite">
+    <div class="row">
+        <div class="col-md-6">
+            <h2 class="text-primary">Category List</h2>
+        </div>
+        <div class="col-6 text-right">
+            <a asp-action="upsert" class="btn btn-primary text-white"><i class="fas fa-plus"></i>&nbsp; Category New</a>
+        </div>
+    </div>
+    <br />
+    <table id="DT_Load" class="table-striped table-bordered table">
+        <thead>
+            <tr>
+                <th>Category Name</th>
+                <th>Order List</th>
+                <th></th>
+            </tr>
+        </thead>
+
+    </table>
+</div>
+
+@section Scripts{
+    <script src="~/js/category.js"></script>
+}
+
+
+@*hey, I feel you, you know it. I felt I scared you that I would come there.
+I was not coming there for you. you were reason that i saw there and I like there, that people bla blah.
+And i know somebody work in Tartu Uni in IT dep it was main reason.
+Maybe you thought  that  I would come  and somehow i could injure your realationship.
+I always do my best to respect your realtionships(probably you felt it), Im really happy(from deep of my heart, beleive me) that you are happy.
+I never wanna lose you, you are always special, at same time I dont wanna be somebody unvwanted and distorbing in your life.
+Anytime when you want i can disappear.
+After my brother im not expecting anything from life and from anyone so there is no tiny bind me and life.
+Maybe  I  misunderstood you, all words so meaningless :)
+typical texting problem :)
+
+In georgia After a week full rain, there was sunny yestreday, and all around mountains was green and super beatful.
+I remembered when we were going David Garadje Monastry, it was reason that i smiled yestreday. that is why I texted you :) .sorry took your time*@

@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewData["Title"] = "ClearingCashDesk";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <form action="/ClearCashDesk" method="post">
+        <div class="container border backgroundWhite">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2 class="text-primary">Accounting</h2>
+
+                </div>
+            </div>
+            <br />
+            <hr />
+            <div class="row">
+                <div class="col-md-6">
+                    <table name="DT_Load" class="table-striped table-bordered table">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Type</th>
+                                <th>Date</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+

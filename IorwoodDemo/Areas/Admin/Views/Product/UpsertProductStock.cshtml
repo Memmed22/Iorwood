@@ -1,0 +1,74 @@
+﻿@model IorwoodDemo.Model.ViewModel.ProductUpsertViewModel
+
+@{
+    ViewData["Title"] = "UpsertProductStock";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form asp-action="UpsertProductStock" id="myForm" method="post">
+
+    <div class="container">
+        <div class="backgroundWhite border row mx-2 px-2">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="col-md-12 px-3" style="border-bottom:solid 1px #325d88">
+                <h2 class="text-primary">Product Stock</h2>
+                <input type="hidden" asp-for="Product.Id" />
+            </div>
+
+            <div class="col-md-8 pt-3">
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label asp-for="Product.Name"></label>
+                    </div>
+                    <div class="col-md-9 test1">
+                        <input readonly asp-for="Product.Name" id="inputName" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label asp-for="Product.StockQuantity"></label>
+                    </div>
+                    <div class="col-md-9 test1">
+                        <input asp-for="Product.StockQuantity" id="inputName" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label asp-for="Product.StockMinQuantity"></label>
+                    </div>
+                    <div class="col-md-9 test1">
+                        <input asp-for="Product.StockMinQuantity" id="inputName" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="offset-3 pt-0 col-md-9 ">
+                        <div class="row">
+                            <div class="col-md-6">
+                                    <button type="submit" class="btn btn-primary form-control">Update</button>
+                            </div>
+                            <div class="col-md-6">
+                                <a href="StcokList" class="btn form-control btn-success">Back to List</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            @if (Model.Product.Id != 0)
+            {
+                <div class="col-md-4 pt-3">
+                    <img style="border:solid 2px #325d88; border-radius:5px;  width:100% " src="@Model.Product.Image" />
+
+                </div>
+            }
+
+        </div>
+        </div>
+
+</form>

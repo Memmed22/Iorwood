@@ -1,0 +1,56 @@
+﻿@model IorwoodDemo.Model.Entity.Unit
+@{
+    ViewData["Title"] = "Upsert";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<form asp-action="Upsert" method="post">
+    <div class="container">
+        <div class="row px-2 mx-2 backgroundWhite border">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (Model.Id != 0)
+            {
+                <input type="hidden" asp-for="Id" />
+            }
+
+            <div class="col-12 px-3" style="border-bottom:1px solid #325d88">
+                <h2 class="text-primary">@(Model.Id != 0 ? "Update" : "Create") Unit</h2>
+
+
+            </div>
+
+            <div class="col-md-8 pt-3">
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="Name"></label>
+                    </div>
+                    <div class="col-9">
+                        <input asp-for="Name" class="form-control" />
+                        <span class="text-danger" asp-validation-for="Name"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8 pt-3">
+                <div class="form-group row">
+                    <div class="col-3">
+                        <label asp-for="Number"></label>
+                    </div>
+                    <div class="col-9">
+                        <input asp-for="Number" class="form-control" />
+                        <span class="text-danger" asp-validation-for="Number"></span>
+                    </div>
+                </div>
+            </div>
+
+            
+
+                    @Html.Partial("_UpsertControlPartial", Model.Id)
+
+
+
+
+        </div>
+    </div>
+</form>
+
+
