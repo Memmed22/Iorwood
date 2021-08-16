@@ -26,7 +26,7 @@ namespace IorwoodDemo.DataAccess.Data
 
         public DbSet<RefundHeader> RefundHeader { get; set; }
         public DbSet<RefundDetail> RefundDetail { get; set; }
-        public DbSet<CurrentMovement> CurrentMovement { get; set; }
+        public DbSet<CurrentMovement> CurrentMovement { get; set; } 
 
         public DbSet<AccountingBook> AccountingBook { get; set; }
 

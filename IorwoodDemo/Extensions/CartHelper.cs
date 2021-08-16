@@ -12,6 +12,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace IorwoodDemo.Extensions
 {
+    /// <summary>
+    /// test surumu
+    /// </summary>
     public  class CartHelper 
     {
         private readonly IHttpContextAccessor _accessor;
